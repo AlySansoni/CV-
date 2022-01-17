@@ -46,7 +46,6 @@ unverified_context = ssl._create_unverified_context()
 print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
 
 
-
 #Loading embedded data
 file_name = "orig_cropped_videos_features_0_999.pkl"
 open_file = open(file_name, "rb")
@@ -55,16 +54,18 @@ open_file.close()
 
 data = np.array(loaded_list)
 
-"""data_sum = np.sum(data)
-array_has_nan = np.isnan(data_sum)
-data_inf = np.isinf(data_sum)
-print(array_has_nan)
-print(data_inf)"""
 
 # Data Normalization
 norm = layers.Normalization()
 norm.adapt(data)
 normalized_data = norm(data)
+
+# Checking for nan or infinite values
+"""data_sum = np.sum(normalized_data)
+array_has_nan = np.isnan(data_sum)
+data_inf = np.isinf(data_sum)
+print(array_has_nan)
+print(data_inf)"""
 
 # Creating a custom layer with keras API.
 output_dim = 256
@@ -178,15 +179,22 @@ class RealNVP(keras.Model):
 
         return {"loss": self.loss_tracker.result()}
 
+    
+    def scheduler(epoch, lr):
+        if epoch <= 300: #original 300
+            return lr
+        else:
+            return (1e-5)/2
 
-model = RealNVP(num_coupling_layers=6)
+model = RealNVP(num_coupling_layers=12) #original number = 6
 
 #original learning rate = 0.0001
-model.compile(optimizer=keras.optimizers.Adam(learning_rate=1e-4))
+model.compile(optimizer=keras.optimizers.Adam(learning_rate=1e-5))
 
+callback = tf.keras.callbacks.LearningRateScheduler(scheduler) #To change the learning rate at runtime after 300 epochs
 
 history = model.fit( #normalized_data
-    normalized_data, batch_size=256, epochs=300, verbose=2, validation_split=0.2
+    normalized_data, batch_size=128, epochs=450, callbacks=[callback],verbose=2, validation_split=0.2
 )
 
 
