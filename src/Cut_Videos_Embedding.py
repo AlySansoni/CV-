@@ -74,6 +74,7 @@ def load_video(path, max_frames=0, resize=(224, 224)):
     cap.release()
   return np.array(frames) / 255.0
 
+#Not used, just in case you want to see the video
 def to_gif(images):
   converted_images = np.clip(images * 255, 0, 255).astype(np.uint8)
   imageio.mimsave('./animation.gif', converted_images, fps=25)
@@ -103,7 +104,6 @@ face_videos = list_face_videos()
 # Obtaining embedded data for each video
 logits = [] 
 for i in range(1000):
-    name = face_videos[i]
     video_path = fetch_face_video(face_videos[i])
     sample_video = load_video(video_path)
     logits.append(predict(sample_video))
