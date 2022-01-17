@@ -9,14 +9,8 @@ from matplotlib import axes
 
 logging.set_verbosity(logging.ERROR)
 
-# Some modules to help with reading the FACE dataset.
-
 import numpy as np
 import pickle
-
-
-# Some modules to display an animation using imageio.
-
 
 from tensorflow import keras
 from tensorflow.keras import layers
@@ -46,18 +40,18 @@ for i in range(len(loaded_list)):
     norm_data_list.append(norm(data))
 
 
-# Creating a custom layer with keras API.
-
+#Loading the pre-trained model
 model = keras.models.load_model('./Model')
 
-
+#Data prediction, test phase for in-distribution data
 orig_data, logdet_orig = model(norm_data_list[0], training = False)
 
+#Plotting original data
 plt.figure(figsize=(15, 10))
 plt.scatter(orig_data[:,0],orig_data[:,1])
-#plt.xlim([-5, 5])
 
 
+#Data prediction, test phase for OOD data
 deepFake_data, logdet_orig = model(norm_data_list[1], training = False)
 face2Face_data, logdet_orig = model(norm_data_list[2], training = False)
 faceSwap_data, logdet_orig = model(norm_data_list[3], training = False)
@@ -66,7 +60,7 @@ neuralTextures_data, logdet_orig = model(norm_data_list[4], training = False)
 f, axes = plt.subplots(2, 2)
 f.set_size_inches(20, 15)
 
-
+#Plotting manipulated data
 
 #axes[0, 0].hist(deepFake_data)
 axes[0, 0].scatter(deepFake_data[:,0], deepFake_data[:,1])
