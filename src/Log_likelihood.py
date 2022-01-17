@@ -3,13 +3,9 @@ from absl import logging
 
 logging.set_verbosity(logging.ERROR)
 
-# Some modules to help with reading the FACE dataset.
-
 import numpy as np
 import pickle
 
-
-# Some modules to display an animation using imageio.
 
 import tensorflow as tf
 from tensorflow import keras
@@ -22,13 +18,14 @@ import matplotlib.pyplot as plt
 dict_names = ["orig", "DeepFake", "Face2Face", "FaceSwap", "NeuralTextures" ]
 log_likelihood = []
 
+#Open all computed data
 for name in dict_names:
     file_name = name+"_log_likelihood.pkl"
     open_file_original = open(file_name, "rb")
     log_likelihood.append(pickle.load(open_file_original))
     open_file_original.close()
 
-
+#Plotting the results
 f, axes = plt.subplots(3, 2)
 f.set_size_inches(40, 30)
 f.suptitle("LOG-Likelihood Histograms")
