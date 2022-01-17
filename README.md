@@ -19,4 +19,4 @@ Man_Video_NF_test.py: Script to load and test manipulated video using the Net tr
 
 Log_likelihood.py: Script to compute and plot all the log-likelihoods. 
 
-Test_ActionVideos.py: Script to test the action dataset with the trained model.
+ActionVideos_Embedding.py: Script to obtain the embeddings for action dataset.
