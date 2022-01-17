@@ -1,7 +1,7 @@
 # CV_Project
 
 
-link for the download of the dataset with relative instructions: https://github.com/ondyari/FaceForensics
+Link to download the Dataset with relative instructions: https://github.com/ondyari/FaceForensics
 
 Images folder: contains data deriving from different computation steps
 
