@@ -26,7 +26,7 @@ FACE_ROOT = "./manipulated_sequences/NeuralTextures/c40/videos"
 _VIDEO_LIST = None
 # As of July 2020, crcv.ucf.edu doesn't use a certificate accepted by the
 # default Colab environment anymore.
-unverified_context = ssl._create_unverified_context()
+#unverified_context = ssl._create_unverified_context()
 
 def list_face_videos():
   """Lists videos available in Face dataset."""
@@ -57,7 +57,7 @@ for j in range(len(face_videos)): # loop for all videos in the folder
   cut_video_array = [] #to save all cut frames
   det_faces = [] #to save coordinates of detected bounding boxes
     
-  # face detection for each frame of a single  
+  # face detection for each frame of a single video
   with mp_face_detection.FaceDetection(model_selection=1, min_detection_confidence=0.5) as face_detection:
     count = 0
     success = True
@@ -77,7 +77,7 @@ for j in range(len(face_videos)): # loop for all videos in the folder
       
       faces = []
     
-      for detection in results.detections:
+      for detection in results.detections: #loop for all founded images
         faces.append(detection.location_data.relative_bounding_box)
       
       # Heuristic to chose the face with the biggest area if in the first frame there is more than one
@@ -122,8 +122,8 @@ for j in range(len(face_videos)): # loop for all videos in the folder
     """
     # If frame dimensions are not all the same
     min_dim = len(cut_video_array[0])
-    for bab in range(len(cut_video_array)):
-      curr_dim = len(cut_video_array[bab])
+    for j in range(len(cut_video_array)):
+      curr_dim = len(cut_video_array[j])
       if curr_dim < min_dim:
         min_dim = curr_dim
 
