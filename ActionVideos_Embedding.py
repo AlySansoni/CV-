@@ -119,10 +119,9 @@ action_videos = list_action_videos()
 # Obtaining embedded data for each video
 logits = [] 
 
-#problem with 125
-for i in range(201, len(action_videos)):
-#for i in range(len(action_videos)):
-    for j in range(len(action_videos[i])):
+#There is a problem with number 125
+for i in range(len(action_videos)):
+    for j in range(len(action_videos[i])): #this is videos in each subfolder, whose number is different for each one
         video_path = fetch_action_video(action_videos[i][j], i)
         sample_video = load_video(video_path)
         logits.append(predict(sample_video))
@@ -131,7 +130,7 @@ for i in range(201, len(action_videos)):
 
   
 # Saving the result file with all embedded data    
-file_name = "action_videos_features_201_274.pkl"
+file_name = "action_videos_features_0_274.pkl"
 
 
 
