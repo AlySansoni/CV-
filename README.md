@@ -1,5 +1,6 @@
 # CV_Project
 
+This project was done at University of Milan for the exam "Computer Vision"
 
 Link to download the Dataset with relative instructions: https://github.com/ondyari/FaceForensics
 
